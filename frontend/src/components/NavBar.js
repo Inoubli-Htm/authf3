@@ -40,6 +40,9 @@ function NavBar() {
               </Button>
 
               <Button variant="outline-primary">Profile</Button>
+              <Link to="/posts">
+                <Button variant="outline-primary">Posts</Button>
+              </Link>
             </>
           ) : (
             <>

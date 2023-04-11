@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Posts from "./pages/Posts";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/posts" element={<Posts />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={3000} theme="dark" />

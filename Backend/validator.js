@@ -6,6 +6,8 @@ const registerRules = [
   body("password", "password must have 6 charactere").isLength({ min: 6 }),
 ];
 
+const verifyPost = [body("text", "text is required").notEmpty()];
+
 const validator = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -19,4 +21,4 @@ const loginRules = [
   body("password", "password must have 6 charactere").notEmpty(),
 ];
 
-module.exports = { registerRules, validator, loginRules };
+module.exports = { registerRules, validator, loginRules, verifyPost };

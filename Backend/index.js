@@ -8,6 +8,9 @@ connectDB();
 app.use(express.json());
 //route
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use(express.json());
+//route
+app.use("/api/post", require("./routes/postRoutes"));
 
 const port = 5000;
 
