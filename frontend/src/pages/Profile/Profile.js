@@ -1,8 +1,31 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Profile.css";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { currentUser } from "../../redux/authSlice";
 
 function Profile() {
+  const [file, setFile] = useState(null);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    let data = new FormData();
+    data.append("myImage", file);
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    try {
+      await axios.patch("api/user/profileImage", data, config);
+      dispatch(currentUser());
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="container">
@@ -13,7 +36,11 @@ function Profile() {
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center text-center">
                   <img
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                    src={
+                      user?.imageUrl
+                        ? `uplaods/${user?.imageUrl}`
+                        : "https://bootdey.com/img/Content/avatar/avatar7.png"
+                    }
                     alt="Admin"
                     className="rounded-circle"
                     width={150}
@@ -25,8 +52,17 @@ function Profile() {
                     <p className="text-muted font-size-sm">
                       Bay Area, San Francisco, CA
                     </p>
+                    <input
+                      type="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
 
-                    <button className="btn btn-outline-primary">edit</button>
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={handleEdit}
+                    >
+                      edit
+                    </button>
                   </div>
                 </div>
               </div>

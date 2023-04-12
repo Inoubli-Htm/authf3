@@ -12,6 +12,8 @@ app.use(express.json());
 //route
 app.use("/api/post", require("./routes/postRoutes"));
 
+app.use("/api/user", require("./routes/userRoutes"));
+
 const port = 5000;
 
 app.listen(port, () => console.log(`server running on port ${port}`));
