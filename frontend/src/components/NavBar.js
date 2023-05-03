@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logOut } from "../redux/authSlice";
+import { logOut, searchPost } from "../redux/authSlice";
 
 function NavBar() {
   const auth = useSelector((state) => state.auth.auth);
@@ -38,8 +38,9 @@ function NavBar() {
               <Button variant="outline-primary m-2" onClick={handleLogOut}>
                 Logout
               </Button>
-
-              <Button variant="outline-primary">Profile</Button>
+              <Link to="/profile">
+                <Button variant="outline-primary">Profile</Button>
+              </Link>
               <Link to="/posts">
                 <Button variant="outline-primary">Posts</Button>
               </Link>
@@ -56,6 +57,15 @@ function NavBar() {
           )}
         </Navbar.Collapse>
       </Container>
+      <Form className="d-flex">
+        <Form.Control
+          type="search"
+          placeholder="Search"
+          className="me-2"
+          aria-label="Search"
+          onChange={(e) => dispatch(searchPost(e.target.value))}
+        />
+      </Form>
     </Navbar>
   );
 }

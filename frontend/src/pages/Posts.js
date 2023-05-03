@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, FormControl } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [text, setText] = useState("");
+  const searchpost = useSelector((state) => state.auth.searchpost);
 
   const addPost = async () => {
     const config = {
@@ -42,12 +44,16 @@ function Posts() {
         Add post
       </Button>
 
-      {posts.map((post) => (
-        <div key={post.id}>
-          <h3>{post.userId.username}</h3>
-          <p>{post.text}</p>
-        </div>
-      ))}
+      {posts
+        .filter((post) =>
+          post.text.toLowerCase().includes(searchpost.toLowerCase().trim())
+        )
+        .map((post) => (
+          <div>
+            <h1>{post.userId.username}</h1>
+            <p>{post.text}</p>
+          </div>
+        ))}
     </div>
   );
 }

@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   auth: false,
   loading: false,
+  searchpost: "",
 };
 
 // register
@@ -62,6 +63,9 @@ export const authSlice = createSlice({
       state.auth = false;
       localStorage.removeItem("token");
     },
+    searchPost: (state, { payload }) => {
+      state.searchpost = payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -73,7 +77,7 @@ export const authSlice = createSlice({
         state.auth = true;
         state.loading = false;
         localStorage.setItem("token", payload.token);
-        toast.success(payload.msg)
+        toast.success(payload.msg);
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
         state.user = null;
@@ -89,7 +93,7 @@ export const authSlice = createSlice({
         state.auth = true;
         state.loading = false;
         localStorage.setItem("token", payload.token);
-        toast.success(payload.msg)
+        toast.success(payload.msg);
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.user = null;
@@ -104,7 +108,7 @@ export const authSlice = createSlice({
         state.user = payload;
         state.auth = true;
         state.loading = false;
-        toast.success(payload.msg)
+        toast.success(payload.msg);
       })
       .addCase(currentUser.rejected, (state, { payload }) => {
         state.user = null;
@@ -114,5 +118,5 @@ export const authSlice = createSlice({
       });
   },
 });
-export const { logOut } = authSlice.actions;
+export const { logOut, searchPost } = authSlice.actions;
 export default authSlice.reducer;
